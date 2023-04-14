@@ -17,6 +17,7 @@
 | Multimodal-C4 core (mmc4-core)                      | 30.5M    | 7.4M   | 2.5B     |
 | Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.9M    | 5.6M   | 1.8B     |
 
+Curation details are in the [paper](mmc4_arxiv.pdf) which will be on arXiv shortly.
 
 ## Accessing mmc4-ff
 
