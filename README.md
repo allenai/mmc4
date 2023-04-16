@@ -102,7 +102,7 @@ If you found our work useful, please consider citing:
 ```
 @article{zhu2023multimodalc4,
     title={{MultimodalC4:} An Open, Billion-scale Corpus of Images Interleaved With Text},
-    author={Zhu, Wanrong and Hessel, Jack and Awadalla, Anas and Gadre, Samir Yitzhak and Dodge, Jesse and Fang, Alex and Yu, Youngjae and Schmidt, Ludwig and Wang, William Yang and Cho, Yejin},
+    author={Zhu, Wanrong and Hessel, Jack and Awadalla, Anas and Gadre, Samir Yitzhak and Dodge, Jesse and Fang, Alex and Yu, Youngjae and Schmidt, Ludwig and Wang, William Yang and Choi, Yejin},
     year={2023},
 }
 ```
