@@ -5,6 +5,7 @@
 <h1 align="center"> :camera: :memo: Multimodal C4 (mmc4) :memo: :camera: </h1>
 
 <h3 align="center"> An open, billion-scale corpus of images interleaved with text. </h3>
+<h4 align="center"> <a href="https://arxiv.org/abs/2304.06939">arXiv paper with curation details out now!</a></h4>
 
 <br>
 
@@ -17,7 +18,7 @@
 | Multimodal-C4 core (mmc4-core)                      | 30.5M    | 7.4M   | 2.5B     |
 | Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.9M    | 5.6M   | 1.8B     |
 
-Curation details are in the [paper](mmc4_arxiv.pdf) which will be on arXiv shortly.
+More details about these datasets and our processing steps [can be found in our paper](https://arxiv.org/abs/2304.06939)
 
 ## Accessing mmc4-ff
 
@@ -100,9 +101,10 @@ We are not releasing raw images for now. But if you are interested in potential 
 
 If you found our work useful, please consider citing:
 ```
-@article{zhu2023multimodalc4,
-    title={{MultimodalC4:} An Open, Billion-scale Corpus of Images Interleaved With Text},
-    author={Zhu, Wanrong and Hessel, Jack and Awadalla, Anas and Gadre, Samir Yitzhak and Dodge, Jesse and Fang, Alex and Yu, Youngjae and Schmidt, Ludwig and Wang, William Yang and Choi, Yejin},
-    year={2023},
+@article{zhu2023multimodal,
+  title={{Multimodal C4}: An Open, Billion-scale Corpus of Images Interleaved With Text},
+  author={Wanrong Zhu and Jack Hessel and Anas Awadalla and Samir Yitzhak Gadre and Jesse Dodge and Alex Fang and Youngjae Yu and Ludwig Schmidt and William Yang Wang and Yejin Choi},
+  journal={arXiv preprint arXiv:2304.06939},
+  year={2023}
 }
 ```
