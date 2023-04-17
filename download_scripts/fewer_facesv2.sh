@@ -19,18 +19,19 @@ mkdir -p "$DESTINATION_FOLDER"
 # Loop through the shard numbers and download and unzip the files
 for SHARD in {0..23098}; do
   URL="${URL_BASE}${SHARD}_v2.jsonl.zip"
+  ZIP_FILE="${DESTINATION_FOLDER}/shard_${SHARD}.zip"
   echo "Downloading shard $SHARD from $URL..."
 
   # Download the file (continue if the file is missing or there is an error)
-  curl -fsSL --retry 3 --retry-delay 5 --max-time 20 --continue-at - "$URL" -o "shard_${SHARD}.zip" || echo "Error downloading shard $SHARD, continuing..."
+  curl -fsSL --retry 3 --retry-delay 5 --max-time 20 --continue-at - "$URL" -o "$ZIP_FILE" || echo "Error downloading shard $SHARD, continuing..."
 
   # Unzip the file if it was downloaded successfully
-  if [ -f "shard_${SHARD}.zip" ]; then
-    echo "Unzipping shard_${SHARD}.zip to $DESTINATION_FOLDER..."
-    yes | unzip -q "shard_${SHARD}.zip" -d "$DESTINATION_FOLDER"
+  if [ -f "$ZIP_FILE" ]; then
+    echo "Unzipping $ZIP_FILE to $DESTINATION_FOLDER..."
+    unzip -q "$ZIP_FILE" -d "$DESTINATION_FOLDER"
 
     # Remove the zip file after unzipping
-    rm "shard_${SHARD}.zip"
+    rm "$ZIP_FILE"
   fi
 done
 
