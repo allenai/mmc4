@@ -1,10 +1,16 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]; then
+  echo "Please provide the destination folder as an argument."
+  echo "Usage: ./download_and_unzip.sh /path/to/destination/folder"
+  exit 1
+fi
+
 # Set the download URL base
 URL_BASE="https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_"
 
 # Set the folder where you want to save the unzipped files
-DESTINATION_FOLDER="/path/to/destination/folder"
+DESTINATION_FOLDER="$1"
 
 # Create the destination folder if it doesn't exist
 mkdir -p "$DESTINATION_FOLDER"

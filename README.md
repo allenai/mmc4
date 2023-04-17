@@ -27,19 +27,17 @@ You can directly download the "fewer faces" multimodal c4 documents at urls like
 
 `https://storage.googleapis.com/ai2-jackh-mmc4-public/data/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
 
-where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 200GB. You can download the smaller "core fewer faces" documents at URLs like this:
+where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 200GB. 
 
-You can also automatically download & unzip these files from commands, rememeber set `DESTINATION_FOLDER="/path/to/destination/folder` to your expected path before executing the script.
-
-`sh download_scripts/fewer_facesv2.sh`
-
-`https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_{$SHARD}_v3.jsonl.zip`
+You can download the smaller "core fewer faces" documents at URLs like this: `https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_{$SHARD}_v3.jsonl.zip` 
 
 where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 9.4GB.
 
-You can also automatically download & unzip these files from commands, rememeber set `DESTINATION_FOLDER="/path/to/destination/folder` to your expected path before executing the script.
+You can also automatically download & unzip these files from commands, you can run the script by providing the destination folder as an argument, like:
 
-`sh download_scripts/fewer_faces_corev3.sh`
+`sh download_scripts/fewer_facesv2.sh /path/to/destination/folder`
+
+`sh download_scripts/fewer_faces_corev3.sh /path/to/destination/folder`
 
 Documents in both sets contain text, image URLs, assignments of images to sentences, and image-by-text CLIP ViT-L/14 similarity matrices. Specifically:
 
