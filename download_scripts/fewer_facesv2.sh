@@ -27,7 +27,7 @@ for SHARD in {0..23098}; do
   # Unzip the file if it was downloaded successfully
   if [ -f "shard_${SHARD}.zip" ]; then
     echo "Unzipping shard_${SHARD}.zip to $DESTINATION_FOLDER..."
-    unzip -q "shard_${SHARD}.zip" -d "$DESTINATION_FOLDER"
+    yes | unzip -q "shard_${SHARD}.zip" -d "$DESTINATION_FOLDER"
 
     # Remove the zip file after unzipping
     rm "shard_${SHARD}.zip"
