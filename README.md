@@ -28,11 +28,11 @@ You can directly download the "fewer faces" multimodal c4 documents at urls like
 
 `https://storage.googleapis.com/ai2-jackh-mmc4-public/data/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
 
-where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 200GB. You can download the smaller "core fewer faces" documents at URLs like this:
+where `SHARD` can vary from 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F). The total size of all these files together is approximately 200GB. You can download the smaller "core fewer faces" documents at URLs like this:
 
 `https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_{$SHARD}_v3.jsonl.zip`
 
-where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 9.4GB.
+where `SHARD` can vary from 0 to 23098. The total size of all these files together is approximately 9.4GB.
 
 Documents in both sets contain text, image URLs, assignments of images to sentences, and image-by-text CLIP ViT-L/14 similarity matrices. Specifically:
 
@@ -91,6 +91,15 @@ If you are interested in accessing mmc4 (and mmc4-core) without the fewer faces 
 ## Accessing raw images
 
 We are not releasing raw images for now. But if you are interested in potential updates, you can contact us using [this google form](https://forms.gle/ytcjFNSZeCbEpPTH6).
+
+## The missing shards ⛏️💎🔍
+
+.1% of the 23099 shards are missing from the corpus. These were not included in any statistics or experiments, so they are not part of mmc4. The missing shards are:
+
+```
+3218,3267,5064,5146,7119,8991,9750,11899,15127,15252,16996,17369,17499,17818
+```
+
 
 ## License
 
