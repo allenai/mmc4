@@ -5,6 +5,7 @@
 <h1 align="center"> :camera: :memo: Multimodal C4 (mmc4) :memo: :camera: </h1>
 
 <h3 align="center"> An open, billion-scale corpus of images interleaved with text. </h3>
+<h4 align="center"> <a href="https://arxiv.org/abs/2304.06939">arXiv paper with curation details out now!</a></h4>
 
 <br>
 
@@ -17,7 +18,7 @@
 | Multimodal-C4 core (mmc4-core)                      | 30.5M    | 7.4M   | 2.5B     |
 | Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.9M    | 5.6M   | 1.8B     |
 
-Curation details are in the [paper](mmc4_arxiv.pdf) which will be on arXiv shortly.
+More details about these datasets and our processing steps [can be found in our paper](https://arxiv.org/abs/2304.06939)
 
 ## Accessing mmc4-ff
 
@@ -27,11 +28,11 @@ You can directly download the "fewer faces" multimodal c4 documents at urls like
 
 `https://storage.googleapis.com/ai2-jackh-mmc4-public/data/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
 
-where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 200GB. 
+where `SHARD` can vary from 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F). The total size of all these files together is approximately 200GB. You can download the smaller "core fewer faces" documents at URLs like this:
 
 You can download the smaller "core fewer faces" documents at URLs like this: `https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_{$SHARD}_v3.jsonl.zip` 
 
-where `SHARD` can vary from 0 to 23098 (there may be a handful of missing shards). The total size of all these files together is approximately 9.4GB.
+where `SHARD` can vary from 0 to 23098. The total size of all these files together is approximately 9.4GB.
 
 You can also automatically download & unzip these files from commands, you can run the script by providing the destination folder as an argument, like:
 
@@ -97,6 +98,15 @@ If you are interested in accessing mmc4 (and mmc4-core) without the fewer faces 
 
 We are not releasing raw images for now. But if you are interested in potential updates, you can contact us using [this google form](https://forms.gle/ytcjFNSZeCbEpPTH6).
 
+## The missing shards ⛏️💎🔍
+
+.1% of the 23099 shards are missing from the corpus. These were not included in any statistics or experiments, so they are not part of mmc4. The missing shards are:
+
+```
+3218,3267,5064,5146,7119,8991,9750,11899,15127,15252,16996,17369,17499,17818
+```
+
+
 ## License
 
 - the new contributions of mmc4 beyond text-only c4 (e.g., the similarity matrices/image-text alignments) are released under [ODC-BY](https://opendatacommons.org/licenses/by/1-0/).
@@ -106,9 +116,10 @@ We are not releasing raw images for now. But if you are interested in potential 
 
 If you found our work useful, please consider citing:
 ```
-@article{zhu2023multimodalc4,
-    title={{MultimodalC4:} An Open, Billion-scale Corpus of Images Interleaved With Text},
-    author={Zhu, Wanrong and Hessel, Jack and Awadalla, Anas and Gadre, Samir Yitzhak and Dodge, Jesse and Fang, Alex and Yu, Youngjae and Schmidt, Ludwig and Wang, William Yang and Choi, Yejin},
-    year={2023},
+@article{zhu2023multimodal,
+  title={{Multimodal C4}: An Open, Billion-scale Corpus of Images Interleaved With Text},
+  author={Wanrong Zhu and Jack Hessel and Anas Awadalla and Samir Yitzhak Gadre and Jesse Dodge and Alex Fang and Youngjae Yu and Ludwig Schmidt and William Yang Wang and Yejin Choi},
+  journal={arXiv preprint arXiv:2304.06939},
+  year={2023}
 }
 ```
