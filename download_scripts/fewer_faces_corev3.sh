@@ -25,13 +25,13 @@ for SHARD in {0..23098}; do
   curl -fsSL --retry 3 --retry-delay 5 --max-time 20 --continue-at - "$URL" -o "$ZIP_FILE" || echo "Error downloading shard $SHARD, continuing..."
 
   # Unzip the file if it was downloaded successfully
-  if [ -f "$ZIP_FILE" ]; then
-    echo "Unzipping $ZIP_FILE to $DESTINATION_FOLDER..."
-    unzip -q "$ZIP_FILE" -d "$DESTINATION_FOLDER"
+#   if [ -f "$ZIP_FILE" ]; then
+#     echo "Unzipping $ZIP_FILE to $DESTINATION_FOLDER..."
+#     yes | unzip -q "$ZIP_FILE" -d "$DESTINATION_FOLDER"
 
-    # Remove the zip file after unzipping
-    rm "$ZIP_FILE"
-  fi
+#     # Remove the zip file after unzipping
+#     rm "$ZIP_FILE"
+#   fi
 done
 
 echo "Download and unzip process completed."
