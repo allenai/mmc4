@@ -1,5 +1,13 @@
 """
-pip install python-magic tqdm pandas requests
+Adapted from: 
+    https://github.com/igorbrigadir/DownloadConceptualCaptions/blob/master/download_data.py
+
+Requirements:
+    - ImageMagick
+    - See requirements.txt for python dependencies
+
+Example Usage:
+    python download_images.py --input_jsonl ./data_core/docs_no_face_shard_0_v3.jsonl
 """
 
 import pandas as pd
