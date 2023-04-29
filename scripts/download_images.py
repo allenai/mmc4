@@ -7,7 +7,7 @@ Requirements:
     - See requirements.txt for python dependencies
 
 Example Usage:
-    python download_images.py --input_jsonl ./data_core/docs_no_face_shard_0_v3.jsonl
+    python download_images.py --input_jsonl ./data_core/docs_no_face_shard_0_v3.jsonl --output_image_dir ./data_core/docs_no_face_shard_0_v3_images
 """
 
 import pandas as pd
@@ -23,7 +23,8 @@ import subprocess
 import time
 import glob
 from pathlib import Path
-
+import zipfile
+from scripts.download_images import gather_image_info
 
 headers = {
     'User-Agent':'Googlebot-Image/1.0', # Pretend to be googlebot
@@ -34,7 +35,8 @@ headers = {
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_jsonl', type=str, required=True, help='Local path to the input jsonl file')
+    parser.add_argument('--input_jsonl', type=str, help='Local path to the input jsonl file')
+    parser.add_argument('--input_zipped_jsonl', type=str, help='Local path to the zipped input jsonl file with .zip extension')
     parser.add_argument('--output_image_dir', type=str, default=None, help='Local path to the directory that stores the downloaded images')
     parser.add_argument('--num_process', type=int, default=16, help='Number of processes in the pool can be larger than cores')
     parser.add_argument('--chunk_size', type=int, default=100, help='Number of images per chunk per process')
@@ -43,10 +45,16 @@ def parse_args():
     
     args = parser.parse_args()
 
-    assert args.input_jsonl.endswith('.jsonl')
-
+    if args.input_jsonl is None and args.input_zipped_jsonl is None:
+        raise ValueError('Please specify either --input_jsonl or --input_zipped_jsonl')
+    elif args.input_zipped_jsonl is not None:
+        assert args.input_zipped_jsonl.endswith('.zip')
+            
+    elif args.input_jsonl is not None:
+        assert args.input_jsonl.endswith('.jsonl')
+        
     if args.shard_name is None:
-        args.shard_name = Path(args.input_jsonl).stem
+        args.shard_name = Path(args.input_jsonl).stem if args.input_jsonl is not None else Path(args.input_zipped_jsonl).stem
     
     if args.output_image_dir is None:
         args.output_image_dir = f'./{args.shard_name}_images/'
@@ -182,6 +190,21 @@ def gather_image_info(args):
                 })
     return data
 
+def gather_image_info_from_zipped_jsonl(args):
+    """Gather image info from the zipped input jsonl"""
+    data = []
+    with zipfile.ZipFile(args.input_zipped_jsonl, 'r') as zip_ref:
+        # Read the contents of a file inside the zip file into memory
+        with zip_ref.open(args.input_zipped_jsonl.replace('.zip', '')) as jsonal_file:
+            # Process the contents of the file
+            for line in tqdm.tqdm(jsonal_file):
+                info = json.loads(line.strip())
+                for img_item in info['image_info']:
+                    data.append({
+                        'local_identifier': img_item['image_name'],
+                        'url': img_item['raw_url'],
+                    })
+    return data
 
 def main():
     args = parse_args()
@@ -192,7 +215,7 @@ def main():
             os.makedirs(_dir)
 
     # Load image info for current shard
-    data = gather_image_info(args)
+    data = gather_image_info(args) if args.input_jsonl else gather_image_info_from_zipped_jsonl(args)
     for d in data:
         d['folder'] = args.output_image_dir
     df = pd.DataFrame(data)
