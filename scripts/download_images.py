@@ -7,7 +7,9 @@ Requirements:
     - See requirements.txt for python dependencies
 
 Example Usage:
-    python download_images.py --input_jsonl ./data_core/docs_no_face_shard_0_v3.jsonl --output_image_dir ./data_core/docs_no_face_shard_0_v3_images
+    python download_images.py --input_jsonl ./data_core/docs_no_face_shard_0_v3.jsonl
+        OR
+    python download_images.py --input_shards "https://storage.googleapis.com/ai2-jackh-mmc4-public/data/docs_no_face_shard_{0..23098}_v2.jsonl.zip" --output_image_dir mmc4_images/
 """
 
 import pandas as pd
@@ -23,8 +25,11 @@ import subprocess
 import time
 import glob
 from pathlib import Path
+import urllib
+import braceexpand
 import zipfile
-from scripts.download_images import gather_image_info
+from PIL import Image
+
 
 headers = {
     'User-Agent':'Googlebot-Image/1.0', # Pretend to be googlebot
@@ -35,8 +40,8 @@ headers = {
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_jsonl', type=str, help='Local path to the input jsonl file')
-    parser.add_argument('--input_zipped_jsonl', type=str, help='Local path to the zipped input jsonl file with .zip extension')
+    parser.add_argument('--input_jsonl', type=str, default=None, help='Local path to the input jsonl file')
+    parser.add_argument("--input_shards", type=str, default=None, help='URL to shards')
     parser.add_argument('--output_image_dir', type=str, default=None, help='Local path to the directory that stores the downloaded images')
     parser.add_argument('--num_process', type=int, default=16, help='Number of processes in the pool can be larger than cores')
     parser.add_argument('--chunk_size', type=int, default=100, help='Number of images per chunk per process')
@@ -45,16 +50,15 @@ def parse_args():
     
     args = parser.parse_args()
 
-    if args.input_jsonl is None and args.input_zipped_jsonl is None:
-        raise ValueError('Please specify either --input_jsonl or --input_zipped_jsonl')
-    elif args.input_zipped_jsonl is not None:
-        assert args.input_zipped_jsonl.endswith('.zip')
-            
-    elif args.input_jsonl is not None:
+    assert args.input_jsonl is not None or args.input_shards is not None
+
+    if args.input_jsonl is not None:
         assert args.input_jsonl.endswith('.jsonl')
         
-    if args.shard_name is None:
-        args.shard_name = Path(args.input_jsonl).stem if args.input_jsonl is not None else Path(args.input_zipped_jsonl).stem
+        if args.shard_name is None:
+            args.shard_name = Path(args.input_jsonl).stem
+    elif args.input_shards is not None:
+        assert args.output_image_dir is not None
     
     if args.output_image_dir is None:
         args.output_image_dir = f'./{args.shard_name}_images/'
@@ -151,6 +155,13 @@ def download_image(row):
             # Resize image if it is too big
             call('mogrify -resize "800x800>" {}'.format(fname))
 
+            # Use the following if mogrify doesn't exist or can't be found
+            # img = Image.open(fname)
+            # if max(img.size) > 800:
+            #     img = img.resize((min(img.width, 800), min(img.height, 800)))
+            #     img.save(fname)
+
+
             row['mimetype'] = magic.from_file(fname, mime=True)
             row['size'] = os.stat(fname).st_size
         except:
@@ -190,32 +201,24 @@ def gather_image_info(args):
                 })
     return data
 
-def gather_image_info_from_zipped_jsonl(args):
-    """Gather image info from the zipped input jsonl"""
+
+def gather_image_info_shard(json_file):
+    """Gather image info from shard"""
     data = []
-    with zipfile.ZipFile(args.input_zipped_jsonl, 'r') as zip_ref:
-        # Read the contents of a file inside the zip file into memory
-        with zip_ref.open(args.input_zipped_jsonl.replace('.zip', '')) as jsonal_file:
-            # Process the contents of the file
-            for line in tqdm.tqdm(jsonal_file):
-                info = json.loads(line.strip())
-                for img_item in info['image_info']:
-                    data.append({
-                        'local_identifier': img_item['image_name'],
-                        'url': img_item['raw_url'],
-                    })
+    for sample_data in tqdm.tqdm(json_file):
+        # get image names from json
+        sample_data = json.loads(sample_data)
+        for img_item in sample_data['image_info']:
+            data.append({
+                'local_identifier': img_item['image_name'],
+                'url': img_item['raw_url'],
+            })
     return data
+                
 
-def main():
-    args = parse_args()
-
-    # Prepare directory
-    for _dir in [args.output_image_dir, args.report_dir]:
-        if not os.path.exists(_dir):
-            os.makedirs(_dir)
-
+def local(args):
     # Load image info for current shard
-    data = gather_image_info(args) if args.input_jsonl else gather_image_info_from_zipped_jsonl(args)
+    data = gather_image_info(args)
     for d in data:
         d['folder'] = args.output_image_dir
     df = pd.DataFrame(data)
@@ -232,6 +235,62 @@ def main():
         args=args,
         shelve_filename=shelve_filename,
     )
+
+
+def main():
+    args = parse_args()
+
+    # Prepare directory
+    for _dir in [args.output_image_dir, args.report_dir]:
+        if not os.path.exists(_dir):
+            os.makedirs(_dir)
+
+    if args.input_jsonl is not None:
+        local()
+    else:
+        doc_shards = list(braceexpand.braceexpand(args.input_shards))
+
+        for idx in range(len(doc_shards)):
+            # image_tar = tarfile.open(image_shards[idx])
+            print("Downloading zip for shard", idx)
+            try:
+                urllib.request.urlretrieve(doc_shards[idx], "temp.zip")
+
+                # Open the ZIP archive and extract the JSON file
+                with zipfile.ZipFile("temp.zip", "r") as zip_file:
+                    # Assumes the JSON file is the first file in the archive
+                    json_filename = zip_file.namelist()[0]
+                    with zip_file.open(json_filename, "r") as json_file:
+                        data = gather_image_info_shard(json_file)
+
+                    shard_folder = args.output_image_dir + "/" + str(idx)
+                    if not os.path.exists(shard_folder):
+                        os.makedirs(shard_folder)
+                    
+                    for d in data:
+                        d['folder'] = shard_folder
+
+                    df = pd.DataFrame(data)
+
+                    args.shard_name = idx
+
+                     # Download images
+                    shelve_filename = download_images_multiprocess(
+                        args=args, 
+                        df=df,
+                        func=download_image,
+                    )
+                    
+                    # Save status & cleaning up
+                    save_status(
+                        args=args,
+                        shelve_filename=shelve_filename,
+                    )
+
+            except urllib.error.HTTPError as e:
+                print(e)
+                print("Skipping shard", idx)
+                continue
 
 
 if __name__ == '__main__':

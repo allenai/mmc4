@@ -2,3 +2,5 @@ python-magic
 tqdm
 pandas
 requests
+braceexpand
+Pillow
