@@ -4,3 +4,4 @@ pandas
 requests
 braceexpand
 Pillow
+lapjv
