@@ -74,6 +74,8 @@ Here's an example:
                'same time.'],
  'url': 'http://www.hfitinfo.com/hofi-48.html'}
 ```
+To get the assignments of images to sentences according to our recommended method, please see [compute_assignments.py](https://github.com/allenai/mmc4/blob/main/scripts/compute_assignments.py)
+
 NOTE: We are depricating two fields for now: `matched_text_index` and `matched_sim`, which are incorrect in ~10% of documents. We will bring these fields back after we update the corpus. (see [#11](https://github.com/allenai/mmc4/issues/11))
 
 ### Image features
