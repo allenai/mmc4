@@ -47,8 +47,6 @@ Documents in both sets contain text, image URLs, assignments of images to senten
 - `image_info` is a key mapping to a list of images. each image contains:
   - `image_name`: a filename that you could download the image to
   - `face_detections`: `None` if no faces are detected (which should be the case in "fewer faces")
-  - `matched_text_index`: the index within `text_list` representing the sentence that this image is matched to
-  - `matched_sim`: the CLIP ViT-L/14 similarity between the image and the sentence at the matched index
 - `similarity_matrix`: a matrix of shape `len(image_info) x len(text_list)` where `similarity_matrix[i, j]` is the CLIP ViT-L/14 similarity between image `i` and sentence `j`.
 
 Here's an example:
@@ -56,13 +54,9 @@ Here's an example:
 ```
 {'image_info': [{'face_detections': None,
                  'image_name': 'b9040a0dbb22.jpg',
-                 'matched_sim': 0.27694183588027954,
-                 'matched_text_index': 2,
                  'raw_url': 'http://www.hfitinfo.com/honda_fit_pics/3/2/index.90.jpg'},
                 {'face_detections': None,
                  'image_name': 'db1c21bc8474.jpg',
-                 'matched_sim': 0.3234919607639313,
-                 'matched_text_index': 1,
                  'raw_url': 'http://www.hfitinfo.com/honda_fit_pics/3/2/index.91.jpg'}],
  'similarity_matrix': [[0.24363446235656738,
                         0.31758785247802734,
@@ -80,7 +74,7 @@ Here's an example:
                'same time.'],
  'url': 'http://www.hfitinfo.com/hofi-48.html'}
 ```
-
+NOTE: We are depricating two fields for now: `matched_text_index` and `matched_sim`, which are incorrect in ~10% of documents. We will bring these fields back after we update the corpus. (see [#11](https://github.com/allenai/mmc4/issues/11))
 
 ### Image features
 
