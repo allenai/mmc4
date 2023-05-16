@@ -29,7 +29,7 @@ Multimodal C4 (mmc4): An Open, Billion-scale Corpus of Images Interleaved With T
 
 - **Homepage:** www.github.com/allenai/mmc4
 - **Repository:** www.github.com/allenai/mmc4
-- **Paper:** forthcoming
+- **Paper:** https://arxiv.org/abs/2304.06939
 - **Point of Contact:** Jack Hessel (jackh@allenai.org)
 
 ### Dataset Summary
@@ -50,7 +50,7 @@ English
 
 You can directly download the "fewer faces" multimodal c4 documents at urls like this:
 
-`https://storage.googleapis.com/ai2-jackh-mmc4-public/data/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
+`https://storage.googleapis.com/ai2-jackh-mmc4-public/data_v1.1/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
 
 You can directly download CLIP ViT-L/14 features extracted from the images at urls like this:
 
