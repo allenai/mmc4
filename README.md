@@ -17,10 +17,10 @@
 
 |                                                     | # images | # docs | # tokens |
 |-----------------------------------------------------|----------|--------|----------|
-| Multimodal-C4 (mmc4)                                | 561M     | 99.7M  | 42B      |
-| Multimodal-C4 fewer-faces (mmc4-ff)                 | 369M     | 76.5M  | 33B      |
-| Multimodal-C4 core (mmc4-core)                      | 29.3M    | 7.1M   | 2.4B     |
-| Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.0M    | 5.4M   | 1.7B     |
+| Multimodal-C4 (mmc4)                                | 571M     | 101.2M | 43B      |
+| Multimodal-C4 fewer-faces (mmc4-ff)                 | 375M     | 77.7M  | 33B      |
+| Multimodal-C4 core (mmc4-core)                      | 29.9M    | 7.3M   | 2.4B     |
+| Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.4M    | 5.5M   | 1.8B     |
 
 More details about these datasets and our processing steps [can be found in our paper](https://arxiv.org/abs/2304.06939). (the current paper results describe v1 of the corpus, we will update to v1.1 soon).
 
