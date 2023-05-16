@@ -7,7 +7,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Set the download URL base
-URL_BASE="https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core/docs_no_face_shard_"
+URL_BASE="https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core_v1.1/docs_no_face_shard_"
 
 # Set the folder where you want to save the unzipped files
 DESTINATION_FOLDER="$1"
