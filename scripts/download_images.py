@@ -246,7 +246,7 @@ def main():
             os.makedirs(_dir)
 
     if args.input_jsonl is not None:
-        local()
+        local(args)
     else:
         doc_shards = list(braceexpand.braceexpand(args.input_shards))
 
