@@ -100,7 +100,7 @@ where `SHARD` can vary from 0 to 23098. The total size of all the image feature 
 
 ## Accessing mmc4
 
-If you are interested in accessing mmc4 (and mmc4-core) without the fewer faces restriction, please fill out [this form.](https://forms.gle/VYtcNY8aYaUANK9f8)
+If you are interested in accessing mmc4 (and mmc4-core) without the fewer faces restriction, please fill out [this form.](https://forms.gle/CUesSpXu7xeXZYKp8)
 
 ## Accessing raw images
 
