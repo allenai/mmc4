@@ -34,7 +34,7 @@ def main():
     args = parse_args()
 
     docs = []
-    with open(args.input_jsonl) as f:
+    with open(args.input_jsonl, 'r', encoding='utf-8') as f:
         for line in f:
             docs.append(json.loads(line))
 
@@ -46,7 +46,7 @@ def main():
             im['matched_text_index'] = int(assignment[im_idx])
             im['matched_sim'] = float(im2txt[im_idx, assignment[im_idx]])
 
-    with open(args.input_jsonl, 'w') as f:
+    with open(args.output_jsonl, 'w', encoding='utf-8') as f:
         f.write('\n'.join([json.dumps(d) for d in docs]))
 
 
