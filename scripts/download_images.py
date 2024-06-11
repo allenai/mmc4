@@ -191,7 +191,7 @@ def save_status(args, shelve_filename):
 def gather_image_info(args):
     """Gather image info from the input jsonl"""
     data = []
-    with open(args.input_jsonl) as f:
+    with open(args.input_jsonl, 'r', encoding='utf-8') as f:
         for line in tqdm.tqdm(f):
             info = json.loads(line.strip())
             for img_item in info['image_info']:
