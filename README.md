@@ -11,6 +11,8 @@
 
 ## Updates
 
+- mmc4 is available once again! A huge thanks to [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) for saving the corpus!
+  - The original copies of mmc4 at ai2 were accidentially deleted in Feb 2025. [If you have any of the original copies of the dataset from before Feb. 2025, do let me know!](#missing-data)
 - released mmc4 version 1.1 :fire: which fixes https://github.com/allenai/mmc4/issues/11 and https://github.com/allenai/mmc4/issues/10
 
 ## Corpus stats (v1.1)
@@ -18,35 +20,30 @@
 |                                                     | # images | # docs | # tokens |
 |-----------------------------------------------------|----------|--------|----------|
 | Multimodal-C4 (mmc4)                                | 571M     | 101.2M | 43B      |
-| Multimodal-C4 fewer-faces (mmc4-ff)                 | 375M     | 77.7M  | 33B      |
-| Multimodal-C4 core (mmc4-core)                      | 29.9M    | 7.3M   | 2.4B     |
+| Multimodal-C4 fewer-faces** (mmc4-ff)               | 375M     | 77.7M  | 33B      |
+| Multimodal-C4 core** (mmc4-core)                    | 29.9M    | 7.3M   | 2.4B     |
 | Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.4M    | 5.5M   | 1.8B     |
 
-More details about these datasets and our processing steps [can be found in our paper](https://arxiv.org/abs/2304.06939). (the current paper results describe v1 of the corpus, we will update to v1.1 soon).
+** = available for direct download
+
+More details about these datasets and our processing steps [can be found in our paper](https://arxiv.org/abs/2304.06939).
 
 ## Accessing mmc4-ff
 
 ### Documents
 
-You can directly download the "fewer faces" multimodal c4 documents at urls like this:
+Now hosted on huggingface:
 
-`https://storage.googleapis.com/ai2-jackh-mmc4-public/data_v1.1/docs_no_face_shard_{$SHARD}_v2.jsonl.zip`
+- [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core)
+- [jmhessel/mmc4-fewer-faces](https://huggingface.co/datasets/jmhessel/mmc4-fewer-faces)
 
-where `SHARD` can vary from 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F). 
+The dataset is split into shards of jsonls.
+- The shard number varies between 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F).
+- Each shard is a jsonl of documents. Each line is a document.
 
-You can download the smaller "core fewer faces" documents at URLs like this:
+Documents contain text, image URLs, assignments of images to sentences, and image-by-text CLIP ViT-L/14 similarity matrices.
 
-`https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core_v1.1/docs_no_face_shard_{$SHARD}_v3.jsonl.zip` 
-
-where `SHARD` can vary from 0 to 23098. The total size of all these files together is approximately 9.4GB.
-
-You can also automatically download & unzip these files from commands, you can run the script by providing the destination folder as an argument, like:
-
-`sh download_scripts/fewer_facesv2.sh /path/to/destination/folder`
-
-`sh download_scripts/fewer_faces_corev3.sh /path/to/destination/folder`
-
-Documents in both sets contain text, image URLs, assignments of images to sentences, and image-by-text CLIP ViT-L/14 similarity matrices. Specifically:
+Specifically:
 
 - `text_list`: a list of sentences comprising the text of the document
 - `url`: the original url where the document was hosted
@@ -90,21 +87,11 @@ Here's an example:
 ```
 The assignments of images to sentences are computed using [compute_assignments.py](https://github.com/allenai/mmc4/blob/main/scripts/compute_assignments.py)
 
-### Image features
-
-You can directly download CLIP ViT-L/14 features extracted from the images at urls like this:
-
-`https://storage.googleapis.com/ai2-jackh-mmc4-public/images/clip_vitl14_shard_{$SHARD}_features.pkl`
-
-where `SHARD` can vary from 0 to 23098. The total size of all the image feature files together is approximately 1.8Tb. Each `pkl` file is a dictionary that maps from image filename (accessible in the document jsons, see `image_name` above) to the associated CLIP feature. We used a [jax port of CLIP](https://github.com/kingoflolz/CLIP_JAX) to extract features on TPU. As a result, there may be some numerical differences with CPU or GPU versions of features. We have found that differences are relatively small in practice.
-
-## Accessing mmc4
-
-If you are interested in accessing mmc4 (and mmc4-core) without the fewer faces restriction, please fill out [this form.](https://forms.gle/CUesSpXu7xeXZYKp8)
-
 ## Accessing raw images
 
-We are not releasing raw images for now. But if you are interested in potential updates, you can contact us using [this google form](https://forms.gle/ytcjFNSZeCbEpPTH6).
+Raw images can be downloaded from the provided URLs in the documents using [this script](scripts/download_images.py). The intent is to respect folks who have removed images from the web and not redistribute those images.
+
+However, we understand that some of the URLs may be stale which can harm reproducibility efforts. If you're interested in updates regarding raw image availability, you can contact us using this google form TODO
 
 ## The missing shards ⛏️💎🔍
 
@@ -130,3 +117,13 @@ If you found our work useful, please consider citing:
   year={2023}
 }
 ```
+
+## Missing data
+
+In Feb 2025, the original copy of mmc4 hosted at AI2 was accidentially deleted. Thanks to some heroic efforts from [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) who kindly provided their locally saved copies of mmc4 to be re-hosted, the corpus is (partially!) available again. The remaining missing files are:
+
+- CLIP ViT/L-14 image features, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-public/images/clip_vitl14_shard_{$SHARD}_features.pkl`
+- mmc4-core-fewer-faces, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core_v1.1/docs_no_face_shard_{$SHARD}_v3.jsonl.zip`.
+- mmc4, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-gated-public-41423/data_v1.1/docs_shard_{$SHARD}_v2.jsonl.zip`.
+
+If you have access to any of these files and are willing to make them available so we can once again host them for the broader community, [please let me know!](mailto:jmhessel@gmail.com)
