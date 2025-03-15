@@ -11,7 +11,7 @@
 
 ## Updates
 
-- mmc4 is available once again! A huge thanks to [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) for saving the corpus!
+- **mmc4 is available once again!** A huge thanks to [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) for saving mmc4-ff and mmc4-core-ff!
   - The original copies of mmc4 at ai2 were accidentially deleted in Feb 2025. [If you have any of the original copies of the dataset from before Feb. 2025, do let me know!](#missing-data)
 - released mmc4 version 1.1 :fire: which fixes https://github.com/allenai/mmc4/issues/11 and https://github.com/allenai/mmc4/issues/10
 
@@ -34,9 +34,8 @@ More details about these datasets and our processing steps [can be found in our 
 
 Now hosted on huggingface:
 
-- mmc4 fewer faces (~ ): [jmhessel/mmc4-ff](https://huggingface.co/datasets/jmhessel/mmc4-ff)
-- mmc4 core fewer faces (~ ): [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core)
-
+- mmc4 fewer faces (~218GB): [jmhessel/mmc4-ff](https://huggingface.co/datasets/jmhessel/mmc4-ff)
+- mmc4 core fewer faces (~20GB): [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core-ff)
 
 The dataset is split into shards of jsonls.
 - The shard number varies between 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F).
@@ -121,7 +120,7 @@ If you found our work useful, please consider citing:
 
 ## Missing data
 
-In Feb 2025, the original copy of mmc4 hosted at AI2 was accidentially deleted. Thanks to some heroic efforts from [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) who kindly provided their locally saved copies of mmc4 to be re-hosted, the corpus is (partially!) available again. The remaining missing files are:
+In Feb 2025, the original copy of mmc4 hosted at AI2 was accidentially deleted. Thanks to some heroic efforts from [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) who kindly provided their locally saved copies of mmc4 to be re-hosted, the corpus is (partially!) available again. Specifically: the "fewer faces" splits (both full and core) are available. The remaining missing files are:
 
 - mmc4, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-gated-public-41423/data_v1.1/docs_shard_{$SHARD}_v2.jsonl.zip`.
 - mmc4-core, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-gated-public-41423/data_core_v1.1/docs_shard_{$SHARD}_v3.jsonl`
