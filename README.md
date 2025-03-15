@@ -35,7 +35,7 @@ More details about these datasets and our processing steps [can be found in our 
 Now hosted on huggingface:
 
 - mmc4 fewer faces (~218GB): [jmhessel/mmc4-ff](https://huggingface.co/datasets/jmhessel/mmc4-ff)
-- mmc4 core fewer faces (~20GB): [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core-ff)
+- mmc4 core fewer faces (~20GB): [jmhessel/mmc4-core-ff](https://huggingface.co/datasets/jmhessel/mmc4-core-ff)
 
 The dataset is split into shards of jsonls.
 - The shard number varies between 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F).
