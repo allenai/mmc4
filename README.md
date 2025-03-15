@@ -21,8 +21,8 @@
 |-----------------------------------------------------|----------|--------|----------|
 | Multimodal-C4 (mmc4)                                | 571M     | 101.2M | 43B      |
 | Multimodal-C4 fewer-faces** (mmc4-ff)               | 375M     | 77.7M  | 33B      |
-| Multimodal-C4 core** (mmc4-core)                    | 29.9M    | 7.3M   | 2.4B     |
-| Multimodal-C4 core fewer-faces (mmc4-core-ff)       | 22.4M    | 5.5M   | 1.8B     |
+| Multimodal-C4 core (mmc4-core)                      | 29.9M    | 7.3M   | 2.4B     |
+| Multimodal-C4 core fewer-faces** (mmc4-core-ff)     | 22.4M    | 5.5M   | 1.8B     |
 
 ** = available for direct download
 
@@ -34,8 +34,9 @@ More details about these datasets and our processing steps [can be found in our 
 
 Now hosted on huggingface:
 
-- [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core)
-- [jmhessel/mmc4-fewer-faces](https://huggingface.co/datasets/jmhessel/mmc4-fewer-faces)
+- mmc4 fewer faces (~ ): [jmhessel/mmc4-ff](https://huggingface.co/datasets/jmhessel/mmc4-ff)
+- mmc4 core fewer faces (~ ): [jmhessel/mmc4-core](https://huggingface.co/datasets/jmhessel/mmc4-core)
+
 
 The dataset is split into shards of jsonls.
 - The shard number varies between 0 to 23098. [14 shards are missing and are not included in the dataset](#the-missing-shards-%EF%B8%8F).
@@ -91,7 +92,7 @@ The assignments of images to sentences are computed using [compute_assignments.p
 
 Raw images can be downloaded from the provided URLs in the documents using [this script](scripts/download_images.py). The intent is to respect folks who have removed images from the web and not redistribute those images.
 
-However, we understand that some of the URLs may be stale which can harm reproducibility efforts. If you're interested in updates regarding raw image availability, you can contact us using this google form TODO
+However, we understand that some of the URLs may be stale which can harm reproducibility efforts. If you're interested in updates regarding raw image availability, you can contact us using [this google form](https://forms.gle/fPSXY359MT1VvF1g8)
 
 ## The missing shards ⛏️💎🔍
 
@@ -122,8 +123,8 @@ If you found our work useful, please consider citing:
 
 In Feb 2025, the original copy of mmc4 hosted at AI2 was accidentially deleted. Thanks to some heroic efforts from [Weizhi Wang](https://victorwz.github.io/) and [Zekun Li](https://github.com/Leezekun/) who kindly provided their locally saved copies of mmc4 to be re-hosted, the corpus is (partially!) available again. The remaining missing files are:
 
-- CLIP ViT/L-14 image features, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-public/images/clip_vitl14_shard_{$SHARD}_features.pkl`
-- mmc4-core-fewer-faces, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-public/data_core_v1.1/docs_no_face_shard_{$SHARD}_v3.jsonl.zip`.
 - mmc4, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-gated-public-41423/data_v1.1/docs_shard_{$SHARD}_v2.jsonl.zip`.
+- mmc4-core, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-gated-public-41423/data_core_v1.1/docs_shard_{$SHARD}_v3.jsonl`
+- CLIP ViT/L-14 image features, originally hosted at `https://storage.googleapis.com/ai2-jackh-mmc4-public/images/clip_vitl14_shard_{$SHARD}_features.pkl`
 
 If you have access to any of these files and are willing to make them available so we can once again host them for the broader community, [please let me know!](mailto:jmhessel@gmail.com)
